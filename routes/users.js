@@ -2,9 +2,8 @@ var express = require('express');
 var router = express.Router();
 var User = require('../app/model/user.js');
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
-var config = require('../config/database.js');
-var passport	= require('passport');
+var config = require('../config/database');
+var passport = require('passport');
 
 mongoose.connect(config.database);
 require('../config/passport')(passport);
@@ -15,11 +14,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/signup', function(req, res) {
-  if (!req.body.name || !req.body.password) {
+  if (!req.body.username || !req.body.password) {
     res.json({success: false, msg: 'Please pass name and password.'});
   } else {
     var newUser = new User({
-      userName: req.body.name,
+      userName: req.body.username,
       password: req.body.password
     });
     // save the user
